@@ -59,6 +59,34 @@ app.route("/articles")
         }
     });
 
+  })
+
+  .put((req,res)=>{
+      Article.update(
+          {title:req.params.articleTitle},
+          {title:req.body.title,content:req.body.content},
+          {overwrite:true},
+          function(err){
+              if(!err){
+                  res.send("Successfully Updated Articles");
+              }else{
+                  res.send(err);
+              }
+          }
+
+          );
+  })
+  .delete(function(req,res){
+      Article.deleteOne(
+          {title:req.params.articleTitle},
+          function(err){
+              if(!err){
+                  res.send("Successfully Deleted the Corresponding Article!");
+              }else{
+                  res.send(err);
+              }
+          }
+      )
   });
 
   
@@ -75,3 +103,4 @@ app.listen(3000, function() {
 //Put-Replace a Data with a whole new one.
 //Patch- Replace the data with Some part the Data which is eror or wrong.
 //Delete- Delete Data from the database.
+//$set: req.body
